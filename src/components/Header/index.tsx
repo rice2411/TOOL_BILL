@@ -28,7 +28,7 @@ function Header() {
         <div className="mt-6 text-center">
           <div className="flex justify-center space-x-6">
             <Link
-              to="/bill"
+              to="/"
               className={`py-2 px-4 text-sm font-medium rounded-md ${
                 activeTab === "/bill"
                   ? "bg-indigo-600 text-white shadow-md"
