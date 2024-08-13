@@ -29,6 +29,16 @@ function Header() {
         <div className="mt-6 text-center">
           <div className="flex justify-center space-x-6">
             <Link
+              to="/bill"
+              className={`py-2 px-4 text-sm font-medium rounded-md ${
+                activeTab === "/bill"
+                  ? "bg-indigo-600 text-white shadow-md"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              Danh sách hóa đơn
+            </Link>
+            <Link
               to="/create-expense"
               className={`py-2 px-4 text-sm font-medium rounded-md ${
                 activeTab === "/create-expense"
@@ -47,16 +57,6 @@ function Header() {
               }`}
             >
               Tạo hóa đơn
-            </Link>
-            <Link
-              to="/invoice-list"
-              className={`py-2 px-4 text-sm font-medium rounded-md ${
-                activeTab === "/invoice-list"
-                  ? "bg-indigo-600 text-white shadow-md"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
-            >
-              Danh sách hóa đơn
             </Link>
           </div>
         </div>

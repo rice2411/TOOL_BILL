@@ -1,5 +1,5 @@
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../services/firebase";
+import { db } from "../../services/firebase";
 
 const fetchExpenses = async () => {
   // This simulates a network request delay
@@ -10,7 +10,7 @@ const fetchExpenses = async () => {
   }));
   return expensesData;
 };
-export const createBillLoader = async () => {
+export const invoiceLoader = async () => {
   const expensesData = await fetchExpenses();
   return expensesData;
 };

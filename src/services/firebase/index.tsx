@@ -4,6 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import {
   getAuth,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -29,7 +30,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
-
+const facebookProvider = new FacebookAuthProvider();
 const logOut = () => {
   signOut(auth)
     .then(() => {
@@ -42,4 +43,4 @@ const logOut = () => {
     });
 };
 
-export { db, auth, googleProvider, signInWithPopup, logOut };
+export { db, auth, googleProvider, facebookProvider, signInWithPopup, logOut };

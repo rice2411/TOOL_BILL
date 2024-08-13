@@ -3,14 +3,13 @@ import { AuthLayout } from "../layout/auth";
 import LoginPage from "../pages/login";
 import ProtectedRoute from "../layout/protected";
 import { AuthProvider } from "../hooks/useAuth";
-import HomePage from "../pages/home";
-import { homeLoader } from "../pages/home/loader";
 import { MainLayout } from "../layout/main";
-import { homeAction } from "../pages/home/action";
 import ExpensePage from "../pages/expense";
 import { expenseLoader } from "../pages/expense/loader";
-import CreateBillPage from "../pages/bill/create";
-import { createBillLoader } from "../pages/bill/create/loader";
+import { invoiceLoader } from "../pages/invoice/loader";
+import InvoicePage from "../pages/invoice";
+import BillPage from "../pages/bill";
+import { billLoader } from "../pages/bill/loader";
 
 export default createBrowserRouter([
   {
@@ -24,20 +23,19 @@ export default createBrowserRouter([
     path: "/",
     children: [
       {
-        path: "/",
-        element: <HomePage />,
-        loader: homeLoader,
-        action: homeAction,
-      },
-      {
         path: "/create-expense",
         element: <ExpensePage />,
         loader: expenseLoader,
       },
       {
         path: "/create-invoice",
-        element: <CreateBillPage />,
-        loader: createBillLoader,
+        element: <InvoicePage />,
+        loader: invoiceLoader,
+      },
+      {
+        path: "/",
+        element: <BillPage />,
+        loader: billLoader,
       },
     ],
   },

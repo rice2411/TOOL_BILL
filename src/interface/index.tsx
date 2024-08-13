@@ -1,6 +1,7 @@
 export interface IUser {
   id: string;
   name: string;
+  amount: number;
 }
 
 export type PersonOption = {
@@ -10,11 +11,11 @@ export type PersonOption = {
 
 // types.ts (or where your types are defined)
 export type Expense = {
-  id: number;
+  id: string;
   name: string;
   total: number;
   amountPerPerson: number;
-  people: string[];
+  people: IUser[];
   date: string;
   creator: string; // New property for the creator
   status: string;
