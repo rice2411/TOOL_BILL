@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { logOut } from "../../services/firebase";
 import Button from "../Button";
 import { useAuth } from "../../hooks/useAuth";
+import { Link, useLocation } from "react-router-dom";
 
 function Header() {
   const { user }: any = useAuth();
-  const [activeTab, setActiveTab] = useState("createExpense");
-
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-  };
+  const location = useLocation(); // Sử dụng useLocation để lấy thông tin về URL hiện tại
+  const activeTab = location.pathname;
 
   return (
     <header className="bg-white shadow-md py-4">
@@ -30,36 +28,36 @@ function Header() {
         </div>
         <div className="mt-6 text-center">
           <div className="flex justify-center space-x-6">
-            <button
-              onClick={() => handleTabClick("createExpense")}
+            <Link
+              to="/create-expense"
               className={`py-2 px-4 text-sm font-medium rounded-md ${
-                activeTab === "createExpense"
+                activeTab === "/create-expense"
                   ? "bg-indigo-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
               Tạo chi tiêu
-            </button>
-            <button
-              onClick={() => handleTabClick("createInvoice")}
+            </Link>
+            <Link
+              to="/create-invoice"
               className={`py-2 px-4 text-sm font-medium rounded-md ${
-                activeTab === "createInvoice"
+                activeTab === "/create-invoice"
                   ? "bg-indigo-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
               Tạo hóa đơn
-            </button>
-            <button
-              onClick={() => handleTabClick("invoiceList")}
+            </Link>
+            <Link
+              to="/invoice-list"
               className={`py-2 px-4 text-sm font-medium rounded-md ${
-                activeTab === "invoiceList"
+                activeTab === "/invoice-list"
                   ? "bg-indigo-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
               Danh sách hóa đơn
-            </button>
+            </Link>
           </div>
         </div>
       </div>

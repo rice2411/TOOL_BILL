@@ -11,9 +11,7 @@ const ExpenseSplitter: React.FC = () => {
   );
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [calculationDate, setCalculationDate] = useState<string>("");
-  const [selectedExpenses, setSelectedExpenses] = useState<Set<number>>(
-    new Set()
-  );
+
   const [filterDate, setFilterDate] = useState<string>("");
   const [bills, setBills] = useState<
     {
@@ -34,18 +32,6 @@ const ExpenseSplitter: React.FC = () => {
     const totals: Record<string, number> = {};
     let total = 0;
 
-    expenses.forEach((expense) => {
-      if (selectedExpenses.has(expense.id)) {
-        total += expense.total; // Add the total amount of the selected expense
-        expense.people.forEach((person) => {
-          if (!totals[person]) {
-            totals[person] = 0;
-          }
-          totals[person] += expense.amountPerPerson;
-        });
-      }
-    });
-
     const newBill = {
       total,
       totalPerPerson: totals,
@@ -59,7 +45,6 @@ const ExpenseSplitter: React.FC = () => {
     // Update processed expenses
     setProcessedExpenses((prevProcessedExpenses) => {
       const updatedProcessedExpenses = new Set(prevProcessedExpenses);
-      selectedExpenses.forEach((id) => updatedProcessedExpenses.add(id));
       return updatedProcessedExpenses;
     });
   };
@@ -68,15 +53,7 @@ const ExpenseSplitter: React.FC = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-8">
         <ExpenseForm addExpense={addExpense} />
-        <ExpenseList
-          expenses={expenses}
-          selectedExpenses={selectedExpenses}
-          setSelectedExpenses={setSelectedExpenses}
-          filterDate={filterDate}
-          setFilterDate={setFilterDate}
-          calculateTotalPerPerson={calculateTotalPerPerson}
-          processedExpenses={processedExpenses} // Pass processedExpenses to ExpenseList
-        />
+
         <div className="md:col-span-1">
           <h2 className="text-xl font-bold mb-4">
             Tổng số tiền mỗi người cần trả

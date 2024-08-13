@@ -4,8 +4,10 @@ import { db } from "../../services/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth";
 import { useLoaderData } from "react-router-dom";
-import { IUser } from "../../interface/user";
+import { IUser } from "../../interface";
 import { Expense, PersonOption } from "../home/types";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for toast notifications
 
 const ExpenseForm: React.FC = () => {
   const { user }: any = useAuth();
@@ -25,15 +27,15 @@ const ExpenseForm: React.FC = () => {
 
   const createExpense = async () => {
     if (!expenseName) {
-      alert("Vui lòng nhập tên khoản chi.");
+      toast.error("Vui lòng nhập tên khoản chi.");
       return;
     }
     if (!totalAmount) {
-      alert("Vui lòng nhập tổng số tiền đã chi.");
+      toast.error("Vui lòng nhập tổng số tiền đã chi.");
       return;
     }
     if (!expenseDate) {
-      alert("Vui lòng chọn ngày.");
+      toast.error("Vui lòng chọn ngày.");
       return;
     }
 
@@ -41,7 +43,7 @@ const ExpenseForm: React.FC = () => {
     const numberOfPeople = selectedPeople.length;
 
     if (numberOfPeople === 0) {
-      alert("Vui lòng chọn ít nhất một người.");
+      toast.error("Vui lòng chọn ít nhất một người.");
       return;
     }
 
@@ -54,6 +56,7 @@ const ExpenseForm: React.FC = () => {
       people: selectedPeople.map((person) => person.label),
       date: expenseDate,
       creator: user.email,
+      status: "Chưa lên bill",
     };
 
     try {
@@ -64,9 +67,11 @@ const ExpenseForm: React.FC = () => {
       setTotalAmount("");
       setSelectedPeople([]);
       setExpenseDate("");
+      // Show success toast
+      toast.success("Khoản chi đã được tạo thành công!");
     } catch (error) {
       console.error("Error adding expense: ", error);
-      alert("Có lỗi xảy ra khi lưu khoản chi.");
+      toast.error("Có lỗi xảy ra khi lưu khoản chi.");
     }
   };
 
@@ -78,7 +83,7 @@ const ExpenseForm: React.FC = () => {
       };
     });
     setPeopleOptions(peopleOptions);
-  }, []);
+  }, [peoples]);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md mx-auto">
@@ -154,6 +159,7 @@ const ExpenseForm: React.FC = () => {
       >
         Tạo
       </button>
+      <ToastContainer /> {/* Include ToastContainer here */}
     </div>
   );
 };

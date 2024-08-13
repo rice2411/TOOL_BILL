@@ -9,6 +9,8 @@ import { MainLayout } from "../layout/main";
 import { homeAction } from "../pages/home/action";
 import ExpensePage from "../pages/expense";
 import { expenseLoader } from "../pages/expense/loader";
+import CreateBillPage from "../pages/bill/create";
+import { createBillLoader } from "../pages/bill/create/loader";
 
 export default createBrowserRouter([
   {
@@ -28,9 +30,14 @@ export default createBrowserRouter([
         action: homeAction,
       },
       {
-        path: "/expense",
+        path: "/create-expense",
         element: <ExpensePage />,
         loader: expenseLoader,
+      },
+      {
+        path: "/create-invoice",
+        element: <CreateBillPage />,
+        loader: createBillLoader,
       },
     ],
   },

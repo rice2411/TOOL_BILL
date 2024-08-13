@@ -5,7 +5,7 @@ import { db } from "../../services/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth";
 import { useLoaderData } from "react-router-dom";
-import { IUser } from "../../interface/user";
+import { IUser } from "../../interface";
 
 interface ExpenseFormProps {
   addExpense: (expense: Expense) => void;
@@ -58,6 +58,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ addExpense }) => {
       people: selectedPeople.map((person) => person.label),
       date: expenseDate,
       creator: user.email,
+      status: "Chưa lên bill",
     };
 
     try {

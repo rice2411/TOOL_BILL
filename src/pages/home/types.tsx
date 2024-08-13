@@ -11,5 +11,6 @@ export type Expense = {
   amountPerPerson: number;
   people: string[];
   date: string;
-  creator: string; // New property for the creator
+  creator: string; 
+  status: string;
 };

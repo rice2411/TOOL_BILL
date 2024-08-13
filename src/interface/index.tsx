@@ -17,4 +17,5 @@ export type Expense = {
   people: string[];
   date: string;
   creator: string; // New property for the creator
+  status: string;
 };
