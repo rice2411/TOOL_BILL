@@ -1,4 +1,3 @@
-import React from "react";
 import { logOut } from "../../services/firebase";
 import Button from "../Button";
 import { useAuth } from "../../hooks/useAuth";
