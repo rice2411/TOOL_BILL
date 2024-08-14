@@ -35,6 +35,16 @@ function Header() {
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
+              Xác chết thống kê
+            </Link>
+            <Link
+              to="/bill"
+              className={`py-2 px-4 text-sm font-medium rounded-md ${
+                activeTab === "/bill"
+                  ? "bg-indigo-600 text-white shadow-md"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
               Danh sách hóa đơn
             </Link>
             <Link

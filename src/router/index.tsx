@@ -10,6 +10,8 @@ import { invoiceLoader } from "../pages/invoice/loader";
 import InvoicePage from "../pages/invoice";
 import BillPage from "../pages/bill";
 import { billLoader } from "../pages/bill/loader";
+import HomePage from "../pages/home";
+import { homeLoader } from "../pages/home/loader";
 
 export default createBrowserRouter([
   {
@@ -33,9 +35,14 @@ export default createBrowserRouter([
         loader: invoiceLoader,
       },
       {
-        path: "/",
+        path: "/bill",
         element: <BillPage />,
         loader: billLoader,
+      },
+      {
+        path: "/",
+        element: <HomePage />,
+        loader: homeLoader,
       },
     ],
   },
