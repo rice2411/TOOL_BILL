@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { Expense, IAuthContext, IPeople } from "../../interface";
-import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import ExpenseCard from "./ExpenseCard";
 import { db } from "../../services/firebase";
 import { useAuth } from "../../hooks/useAuth";
@@ -15,7 +21,7 @@ const Invoice: React.FC = () => {
     new Set()
   );
   const [data, setData] = useState<Expense[]>([]);
-  const [showAll, setShowAll] = useState<boolean>(false); 
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   const resetFilter = () => {
     setFilterDate("");
@@ -81,6 +87,20 @@ const Invoice: React.FC = () => {
       setSelectedExpenses(new Set());
     } catch (e) {
       console.error("Error updating documents: ", e);
+    }
+  };
+
+  const handleDeleteExpense = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, "expenses", id));
+      setData((prevData) => prevData.filter((expense) => expense.id !== id));
+      setBilledExpenses((prevBilledExpenses) => {
+        const updatedBilled = new Set(prevBilledExpenses);
+        updatedBilled.delete(id);
+        return updatedBilled;
+      });
+    } catch (e) {
+      console.error("Error deleting document: ", e);
     }
   };
 
@@ -171,6 +191,7 @@ const Invoice: React.FC = () => {
                   return updatedSelection;
                 });
               }}
+              onDelete={handleDeleteExpense} // Pass delete handler
             />
           ))
         )}

@@ -18,7 +18,6 @@ export interface IAuthContext {
   setUser: (user: IUser) => void;
 }
 
-
 export type Expense = {
   id: string;
   name: string;
@@ -26,6 +25,17 @@ export type Expense = {
   amountPerPerson: number;
   people: IPeople[];
   date: string;
-  creator: string; 
+  creator: string;
   status: string;
 };
+
+interface SplitItem {
+  name: string;
+  amount: string;
+}
+
+export interface PersonSplit {
+  personId: string;
+  personName: string;
+  items: SplitItem[];
+}
