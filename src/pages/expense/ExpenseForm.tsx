@@ -33,8 +33,6 @@ const ExpenseForm: React.FC = () => {
   const [isSplitDisabled, setIsSplitDisabled] = useState<boolean>(false);
   const [isTotalExceeded, setIsTotalExceeded] = useState<boolean>(false);
 
-  const isReactSelectDisabled = !isSplitEqually;
-
   const handleCurrencyInput = (value: string): string => {
     const numericValue = value.replace(/\D/g, "");
     return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
