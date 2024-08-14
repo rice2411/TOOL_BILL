@@ -6,7 +6,7 @@ import { IAuthContext } from "../../interface";
 
 function Header() {
   const { user } = useAuth() as unknown as IAuthContext;
-  const location = useLocation(); // Sử dụng useLocation để lấy thông tin về URL hiện tại
+  const location = useLocation();
   const activeTab = location.pathname;
   return (
     <header className="bg-white shadow-md py-4">

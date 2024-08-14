@@ -2,11 +2,10 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
 const fetchBill = async () => {
-  // This simulates a network request delay
   const querySnapshot = await getDocs(collection(db, "bills"));
   const billData = querySnapshot.docs.map((doc) => ({
-    id: doc.id, // Lấy ID của tài liệu
-    ...doc.data(), // Lấy dữ liệu của tài liệu
+    id: doc.id, 
+    ...doc.data(),
   }));
   return billData;
 };

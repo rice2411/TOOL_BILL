@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useLoaderData } from "react-router-dom";
 import { Expense, IAuthContext, IPeople, PersonOption } from "../../interface";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import CSS for toast notifications
+import "react-toastify/dist/ReactToastify.css"; 
 
 const ExpenseForm: React.FC = () => {
   const { user } = useAuth() as unknown as IAuthContext;
@@ -51,40 +51,36 @@ const ExpenseForm: React.FC = () => {
     const peopleDetails = selectedPeople.map((person) => ({
       id: person.value,
       name: person.label,
-      amount: amountPerPerson, // Amount each person owes
+      amount: amountPerPerson,
     }));
 
     const newExpense: Omit<Expense, "id"> = {
       name: expenseName || "Không có tên",
       total,
       amountPerPerson: amountPerPerson,
-      people: peopleDetails, // Updated to include IDs and names
+      people: peopleDetails,
       date: expenseDate,
       creator: user.email,
       status: "Chưa lên bill",
     };
 
     try {
-      // Add the expense to Firebase Firestore
       await addDoc(collection(db, "expenses"), newExpense);
 
-      // Update each user's amount
       const userUpdates = peopleDetails.map(async (personDetail) => {
         const userRef = doc(db, "users", personDetail.id);
         return updateDoc(userRef, {
           amount:
-            (personDetail.amount || 0) + (await getUserAmount(personDetail.id)), // Adding the new amount
+            (personDetail.amount || 0) + (await getUserAmount(personDetail.id)),
         });
       });
 
       await Promise.all(userUpdates);
 
-      // Reset the form fields
       setExpenseName("");
       setTotalAmount("");
       setSelectedPeople([]);
       setExpenseDate("");
-      // Show success toast
       toast.success(
         "Khoản chi đã được tạo thành công và số tiền của người tham gia đã được cập nhật!"
       );
@@ -97,12 +93,12 @@ const ExpenseForm: React.FC = () => {
   const getUserAmount = async (userId: string) => {
     try {
       const userRef = doc(db, "users", userId);
-      const userDoc = await getDoc(userRef); // Use getDoc to fetch the document
+      const userDoc = await getDoc(userRef);
       const userData = userDoc.data();
       return userData?.amount || 0;
     } catch (error) {
       console.error("Error fetching user amount: ", error);
-      return 0; // Handle error case
+      return 0;
     }
   };
 

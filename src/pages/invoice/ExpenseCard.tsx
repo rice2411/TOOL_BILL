@@ -17,7 +17,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({
 
   return (
     <div
-      onClick={!isBilled ? onSelect : undefined} // Prevent selection if billed
+      onClick={!isBilled ? onSelect : undefined}
       className={`p-4 rounded-lg shadow-md ${
         isBilled
           ? "bg-green-100 border border-green-400 cursor-not-allowed"

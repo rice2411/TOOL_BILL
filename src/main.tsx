@@ -4,10 +4,5 @@ import router from "./router";
 import { RouterProvider } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
-  // <StrictMode>
-  //   <AuthProvider>
-  //     <App />
-  //   </AuthProvider>
-  // </StrictMode>
   <RouterProvider router={router} />
 );

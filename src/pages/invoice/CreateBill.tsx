@@ -15,11 +15,11 @@ const Invoice: React.FC = () => {
     new Set()
   );
   const [data, setData] = useState<Expense[]>([]);
-  const [showAll, setShowAll] = useState<boolean>(false); // New state for filtering all items
+  const [showAll, setShowAll] = useState<boolean>(false); 
 
   const resetFilter = () => {
     setFilterDate("");
-    setShowAll(false); // Reset to show only not billed items
+    setShowAll(false);
   };
 
   const calculateTotalPerPerson = async () => {
@@ -29,7 +29,6 @@ const Invoice: React.FC = () => {
     let totalAmount = 0;
     const selectedExpensesList: Expense[] = [];
 
-    // Calculate total amount and amount per person
     expenses.forEach((expense: Expense) => {
       if (selectedExpenses.has(expense.id)) {
         totalAmount += expense.total;
@@ -52,11 +51,9 @@ const Invoice: React.FC = () => {
     };
 
     try {
-      // Add new bill to Firebase
       const billDocRef = await addDoc(collection(db, "bills"), newBill);
       console.log("Bill document written with ID: ", billDocRef.id);
 
-      // Update status of selected expenses in Firebase to "đã lên bill"
       await Promise.all(
         selectedExpensesList.map(async (expense) => {
           const expenseDocRef = doc(db, "expenses", expense.id.toString());
@@ -64,7 +61,6 @@ const Invoice: React.FC = () => {
         })
       );
 
-      // Update the state for billed expenses
       setBilledExpenses((prevBilledExpenses) => {
         const updatedBilled = new Set(prevBilledExpenses);
         selectedExpenses.forEach((expenseId) => {
@@ -73,7 +69,6 @@ const Invoice: React.FC = () => {
         return updatedBilled;
       });
 
-      // Update expenses to mark selected expenses as "đã lên bill"
       setData((prevExpenses) => {
         return prevExpenses.map((expense: Expense) => {
           if (selectedExpenses.has(expense.id)) {
@@ -83,7 +78,6 @@ const Invoice: React.FC = () => {
         });
       });
 
-      // Clear selected expenses after processing
       setSelectedExpenses(new Set());
     } catch (e) {
       console.error("Error updating documents: ", e);
@@ -93,14 +87,12 @@ const Invoice: React.FC = () => {
   useEffect(() => {
     let filteredExpenses = expenses;
 
-    // Filter by date if filterDate is set
     if (filterDate) {
       filteredExpenses = filteredExpenses.filter(
         (expense: Expense) => expense.date === filterDate
       );
     }
 
-    // Further filter by status if showAll is not true
     if (!showAll) {
       filteredExpenses = filteredExpenses.filter(
         (expense: Expense) => expense.status.toLowerCase() === "chưa lên bill"
@@ -167,7 +159,7 @@ const Invoice: React.FC = () => {
               expense={expense}
               isSelected={selectedExpenses.has(expense.id)}
               onSelect={() => {
-                if (billedExpenses.has(expense.id)) return; // Prevent selecting if already billed
+                if (billedExpenses.has(expense.id)) return;
 
                 setSelectedExpenses((prevSelectedExpenses) => {
                   const updatedSelection = new Set(prevSelectedExpenses);

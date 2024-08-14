@@ -18,7 +18,7 @@ export interface IAuthContext {
   setUser: (user: IUser) => void;
 }
 
-// types.ts (or where your types are defined)
+
 export type Expense = {
   id: string;
   name: string;
@@ -26,6 +26,6 @@ export type Expense = {
   amountPerPerson: number;
   people: IPeople[];
   date: string;
-  creator: string; // New property for the creator
+  creator: string; 
   status: string;
 };
