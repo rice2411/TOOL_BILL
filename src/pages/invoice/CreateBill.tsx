@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { Expense } from "../../interface";
+import { Expense, IAuthContext, IPeople } from "../../interface";
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import ExpenseCard from "./ExpenseCard";
 import { db } from "../../services/firebase";
 import { useAuth } from "../../hooks/useAuth";
 
 const Invoice: React.FC = () => {
-  const expenses: any = useLoaderData();
-  const { user }: any = useAuth();
+  const expenses = useLoaderData() as unknown as Expense[];
+  const { user } = useAuth() as unknown as IAuthContext;
   const [filterDate, setFilterDate] = useState<string>("");
   const [billedExpenses, setBilledExpenses] = useState<Set<string>>(new Set());
   const [selectedExpenses, setSelectedExpenses] = useState<Set<string>>(
@@ -34,7 +34,7 @@ const Invoice: React.FC = () => {
       if (selectedExpenses.has(expense.id)) {
         totalAmount += expense.total;
         selectedExpensesList.push(expense);
-        expense.people.forEach((person: any) => {
+        expense.people.forEach((person: IPeople) => {
           if (!totals[person.name]) {
             totals[person.name] = 0;
           }
@@ -74,7 +74,7 @@ const Invoice: React.FC = () => {
       });
 
       // Update expenses to mark selected expenses as "đã lên bill"
-      setData((prevExpenses: any) => {
+      setData((prevExpenses) => {
         return prevExpenses.map((expense: Expense) => {
           if (selectedExpenses.has(expense.id)) {
             return { ...expense, status: "đã lên bill" };

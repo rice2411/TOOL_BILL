@@ -2,12 +2,12 @@ import { logOut } from "../../services/firebase";
 import Button from "../Button";
 import { useAuth } from "../../hooks/useAuth";
 import { Link, useLocation } from "react-router-dom";
+import { IAuthContext } from "../../interface";
 
 function Header() {
-  const { user }: any = useAuth();
+  const { user } = useAuth() as unknown as IAuthContext;
   const location = useLocation(); // Sử dụng useLocation để lấy thông tin về URL hiện tại
   const activeTab = location.pathname;
-
   return (
     <header className="bg-white shadow-md py-4">
       <div className="max-w-6xl mx-auto px-4">
@@ -15,8 +15,8 @@ function Header() {
           <div className="text-xl font-bold">My App</div>
           <div className="flex items-center space-x-4">
             <div className="text-sm text-gray-700">
-              <p>{user.displayName}</p>
-              <p className="text-gray-500">{user.email}</p>
+              <p>{user?.displayName || ""}</p>
+              <p className="text-gray-500">{user?.email}</p>
             </div>
             <Button
               text="Logout"

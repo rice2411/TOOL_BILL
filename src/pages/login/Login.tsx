@@ -3,22 +3,21 @@ import { IButtonProps } from "../../components/Button/props";
 import IconGoogle from "../../assets/images/icon-google.svg";
 import IconFacebook from "../../assets/images/icon-facebook.svg";
 import { signInWithPopup } from "firebase/auth";
-import {
-  auth,
-  googleProvider,
-  facebookProvider,
-} from "../../services/firebase";
+import { auth, provider } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { IAuthContext, IUser } from "../../interface";
 
-function Login(this: any) {
+function Login() {
   const navigate = useNavigate();
-  const { setUser }: any = useAuth();
-  const handleLogin = async (provider: any) => {
+  const { setUser } = useAuth() as unknown as IAuthContext;
+  const handleLogin = async (providerString: string) => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log("User info:", user);
+      const result = await signInWithPopup(
+        auth,
+        provider[providerString as keyof typeof provider]
+      );
+      const user: IUser = JSON.parse(JSON.stringify(result.user));
       setUser(user);
       localStorage.setItem("user", JSON.stringify(user));
       navigate("/");
@@ -32,7 +31,7 @@ function Login(this: any) {
       icon: IconGoogle,
       className: "my-2",
       onClick: () => {
-        handleLogin(googleProvider);
+        handleLogin("google");
       },
     },
     {
@@ -40,7 +39,7 @@ function Login(this: any) {
       icon: IconFacebook,
       className: "my-2",
       onClick: () => {
-        handleLogin(facebookProvider);
+        handleLogin("facebook");
       },
     },
   ];

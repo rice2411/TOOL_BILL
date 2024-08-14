@@ -29,8 +29,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-const googleProvider = new GoogleAuthProvider();
-const facebookProvider = new FacebookAuthProvider();
+const provider = {
+  google: new GoogleAuthProvider(),
+  facebook: new FacebookAuthProvider(),
+};
 const logOut = () => {
   signOut(auth)
     .then(() => {
@@ -43,4 +45,4 @@ const logOut = () => {
     });
 };
 
-export { db, auth, googleProvider, facebookProvider, signInWithPopup, logOut };
+export { db, auth, provider, signInWithPopup, logOut };

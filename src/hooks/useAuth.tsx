@@ -1,16 +1,35 @@
-// AuthContext.js
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../services/firebase";
+import { IUser } from "../interface";
 
-const AuthContext = createContext({});
+interface AuthContextType {
+  user: IUser;
+  setUser: (user: IUser) => void;
+}
 
-// Custom hook to use the auth context
-export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: any) => {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState(() => {
-    // Load user data from localStorage if available
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
@@ -19,7 +38,6 @@ export const AuthProvider = ({ children }: any) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        // Save user data to localStorage
         localStorage.setItem("user", JSON.stringify(user));
       } else {
         setUser(null);
@@ -27,7 +45,6 @@ export const AuthProvider = ({ children }: any) => {
       }
     });
 
-    // Clean up subscription on unmount
     return () => unsubscribe();
   }, []);
 

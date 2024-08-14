@@ -1,5 +1,5 @@
 import React from "react";
-import { Expense } from "../../interface";
+import { Expense, IPeople } from "../../interface";
 import { formatCurrency } from "../../utils";
 
 interface ExpenseCardProps {
@@ -32,7 +32,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({
       </p>
       <p className="text-gray-500">
         Người tham gia:{" "}
-        {expense.people.map((person: any) => person.name).join(", ")}
+        {expense.people.map((person: IPeople) => person.name).join(", ")}
       </p>
       <p className="text-gray-500">Ngày tạo: {expense.date}</p>
       <p className="text-gray-500">Người tạo: {expense.creator}</p>

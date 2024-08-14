@@ -4,13 +4,13 @@ import { db } from "../../services/firebase";
 import { collection, addDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth";
 import { useLoaderData } from "react-router-dom";
-import { Expense, IUser, PersonOption } from "../../interface";
+import { Expense, IAuthContext, IPeople, PersonOption } from "../../interface";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import CSS for toast notifications
 
 const ExpenseForm: React.FC = () => {
-  const { user }: any = useAuth();
-  const peoples: any = useLoaderData();
+  const { user } = useAuth() as unknown as IAuthContext;
+  const peoples = useLoaderData() as unknown as IPeople[];
 
   const [peopleOptions, setPeopleOptions] = useState<PersonOption[]>([]);
   const [expenseName, setExpenseName] = useState<string>("");
@@ -107,7 +107,7 @@ const ExpenseForm: React.FC = () => {
   };
 
   useEffect(() => {
-    const peopleOptions: PersonOption[] = peoples.map((people: IUser) => ({
+    const peopleOptions: PersonOption[] = peoples.map((people: IPeople) => ({
       value: people.id,
       label: people.name,
     }));
